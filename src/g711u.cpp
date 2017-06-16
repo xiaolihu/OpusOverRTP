@@ -18,7 +18,7 @@ int g711uCodec::decodeFrame()
 // TBD
 }
 
-int g711uCodec::encodeFrame();
+int g711uCodec::encodeFrame()
 {
 // TBD
 }
