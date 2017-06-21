@@ -5,8 +5,8 @@
 
 class voipCodec {
 public:
-    voipCodec() { RD_buffer = new RD_buffer_t(); } // to delete
-    virtual ~voipCodec() = default;
+    voipCodec() { RD_buffer = new RD_buffer_t(); }
+    ~voipCodec() { delete RD_buffer};
 
     void voipDecInit() {}
     void voipEncInit() {}

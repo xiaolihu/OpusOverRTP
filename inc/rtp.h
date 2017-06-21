@@ -1,10 +1,17 @@
+#ifndef _RTP_H_
+#define _RTP_H_
+
 #include <types.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #define RTP_VERSION 2
 /*
  * RTP data header
  */
-typedef struct {
+struct {
     // RTP_BIG_ENDIAN
     unsigned int version:2;   /* protocol version */
     unsigned int p:1;         /* padding flag */
@@ -49,3 +56,9 @@ typedef union {
   } p;
   char byte[8192];
 } RD_buffer_t;
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif

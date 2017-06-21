@@ -23,9 +23,7 @@ int main(int agrc, char *argv[])
 
     opusCodec opusDecEnc(); // TBD passed-in parameters
     
-    while (opusDecEnc.decodeFrame(fin, fout)) {
-
-    }
+    opusDecEnc.decodeFrame(fin, fout);
 
     return 0;
 }

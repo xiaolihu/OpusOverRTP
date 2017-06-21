@@ -4,7 +4,7 @@
 
 #include "VoIPcodec.hpp"
 
-static const char RTPFILE_VER[] = "1.0";
+static const char voipCodec::RTPFILE_VER[] = "1.0";
 
 bool voipCodec::validateRTPDumpVersion(istream &fin)
 {
@@ -32,12 +32,12 @@ int voipCodec::extractRTPPayload(istream &fin, RD_buffer_t *b)
     /* convert to host byte order */
     b->p.hdr.length = ntohs(b->p.hdr.length) - sizeof(b->p.hdr);
     b->p.hdr.offset = ntohl(b->p.hdr.offset);
-    b->p.hdr.plen   = ntohs(b->p.hdr.plen);
+    b->p.hdr.plen   = ntohs(b->p.hdr.plen) - sizeof(b->p.rtp_hdr);
 
     b->p.rtp_hdr.ts   = ntohl(b->p.rtp_hdr.ts);
     b->p.rtp_hdr.ssrc = ntohl(b->p.rtp_hdr.ssrc);
     // RTP Payload
-    fin.read(b->p.data, b->p.hdr.plen - sizeof(b->p.rtp_hdr));
+    fin.read(b->p.data, b->p.hdr.plen);
 
     return (b->p.hdr.plen - sizeof(b->p.rtp_hdr));
 }
