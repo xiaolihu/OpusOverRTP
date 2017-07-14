@@ -7,6 +7,8 @@
 
 #include <cstring>
 
+#define OPUS_DEFAULT_SAMPLE_RATE 48000 // To be done, should be passed in via CLI command
+
 struct opusConig {
     int codecMode;
     int frameSizeMs;
@@ -16,7 +18,7 @@ struct opusConig {
     bool vbr;
 };
 
-enum {
+typedef enum {
 	DEC_FAILURE = -1,
 	DEC_SUCCESS = 0
 } CODEC_RC;

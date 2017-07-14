@@ -2,7 +2,7 @@
 //
 // All Copyrights are reserved.
 
-#include "VoIPcodec.hpp"
+#include "VoIPCodec.hpp"
 
 static const char voipCodec::RTPFILE_VER[] = "1.0";
 
