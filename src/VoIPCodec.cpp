@@ -2,16 +2,17 @@
 //
 // All Copyrights are reserved.
 
-#include "VoIPcodec.hpp"
-
-static const char voipCodec::RTPFILE_VER[] = "1.0";
+#include "VoIPCodec.hpp"
+#include <stdio.h>
+#include <netinet/in.h>
+const char voipCodec::RTPFILE_VER[] = "1.0";
 
 bool voipCodec::validateRTPDumpVersion(istream &fin)
 {
     // rtp dump file version @ first line
     char line[80], magic[80];
 
-    fin.getline(line, sizeof(line);
+    fin.getline(line, sizeof(line));
 
     sprintf(magic, "#!rtpplay%s ", RTPFILE_VER);
 

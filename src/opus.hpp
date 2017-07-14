@@ -7,6 +7,8 @@
 
 #include <cstring>
 
+#define OPUS_DEFAULT_SAMPLE_RATE 48000 // To be done, should be passed in via CLI command
+
 struct opusConig {
     int codecMode;
     int frameSizeMs;
@@ -16,7 +18,7 @@ struct opusConig {
     bool vbr;
 };
 
-enum {
+typedef enum {
 	DEC_FAILURE = -1,
 	DEC_SUCCESS = 0
 } CODEC_RC;
@@ -53,7 +55,7 @@ opusCodec::opusCodec()
 int opusCodec::decodeFrame(istream &fin, ostream &fout)
 {
     bool decode_done = false;
-
+    int outSamples = -1;
     //extract RTP headder and check its payload
     // https://wiki.wireshark.org/rtpdump
     if(!validateRTPDumpVersion(fin)) {
@@ -63,8 +65,8 @@ int opusCodec::decodeFrame(istream &fin, ostream &fout)
 
     //While loop here till EOF
     while (extractRTPPayload(fin, voipCodec::RD_buffer) > 0) {
-       outSamples = opus_decode(decInst, RD_buffer->p.data, RD_buffer->p.hdr.plen,
-                                decOutputBuf, max_output_samples, 0); // no fec
+       outSamples = opus_decode(decInst, (unsigned char *)RD_buffer->p.data, RD_buffer->p.hdr.plen,
+                                (opus_int16*)decOutputBuf, max_output_samples, 0); // no fec
        fout.write(decOutputBuf, outSamples >> 2);
 
        memset(decOutputBuf, 0, 5760);

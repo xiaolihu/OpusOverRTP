@@ -1,0 +1,75 @@
+apply plugin : 'cpp'
+apply plugin : 'c'
+
+
+model{
+	toolChains{
+        
+		gcc(Gcc){
+			target 'ubun'
+		}
+        clang(Clang) {
+	    target "Macx64"
+	}
+	}
+	platforms{
+		ubun{
+			architecture 'x86_64'
+			operatingSystem 'linux'
+		}
+	    Macx64 {
+	        architecture 'x86_64'
+	        operatingSystem 'darwin'
+        }
+	}
+	buildTypes{
+		debug
+		release
+	}
+	repositories {
+		libs(PrebuiltLibraries){
+			opus{
+				//headers.srcDir './lib/ubunos'
+				binaries.withType(PrebuildStaticLibraryBinary){
+					staticLibraryFile dir:file('.lib/ubunos'),lib:'opus'
+				}		 
+			}
+		}
+	}
+	components{
+		VoIPCodec(NativeExecutableSpec){
+			targetPlatform 'ubun'
+
+			sources {
+				
+				cpp{
+					//preCompiledHeader "rtp.h"
+					source{
+						srcDir "src"
+						include "*.cpp"
+					}
+					exportedHeaders{
+						srcDir "inc"
+			            srcDir "scr"
+			            srcDir "inc/opus"
+					}
+				}
+			}
+			
+			binaries.all{
+				cppCompiler.define 'DEBUG_O'
+			   
+				if(toolChain in Gcc && buildType == buildTypes.debug){
+					cppCompiler.args '-ggdb','-Werror','-O2'
+				}
+				linker.args "-static"
+				//linker.args '-Wl,-Bdynamic'
+				linker.args '-lstdc++'
+				//linker.args '-Wl,-Bstatic' 
+				linker.args '-lopus'
+			}
+			
+		}
+	}
+
+}
