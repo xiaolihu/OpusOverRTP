@@ -3,9 +3,14 @@
 // All Copyrights are reserved.
 
 #include "VoIPCodec.hpp"
+<<<<<<< HEAD
 #include <stdio.h>
 #include <netinet/in.h>
 const char voipCodec::RTPFILE_VER[] = "1.0";
+=======
+
+static const char voipCodec::RTPFILE_VER[] = "1.0";
+>>>>>>> b8f3f6939464f0875c533b561237cc61b00e73d0
 
 bool voipCodec::validateRTPDumpVersion(istream &fin)
 {
