@@ -1,7 +1,6 @@
 apply plugin : 'cpp'
 apply plugin : 'c'
 
-<<<<<<< HEAD
 
 model{
 	toolChains{
@@ -30,9 +29,9 @@ model{
 	repositories {
 		libs(PrebuiltLibraries){
 			opus{
-				//headers.srcDir './lib/ubunos'
-				binaries.withType(PrebuildStaticLibraryBinary){
-					staticLibraryFile dir:file('.lib/ubunos'),lib:'opus'
+				headers.srcDir './lib/ubunos'
+				binaries.withType(StaticLibraryBinary){
+					staticLibraryFile = file('lib/ubunos/libopus.a.1.2.1')
 				}		 
 			}
 		}
@@ -63,67 +62,15 @@ model{
 				if(toolChain in Gcc && buildType == buildTypes.debug){
 					cppCompiler.args '-ggdb','-Werror','-O2'
 				}
-				linker.args "-static"
+				//linker.args "-static"
 				//linker.args '-Wl,-Bdynamic'
 				linker.args '-lstdc++'
 				//linker.args '-Wl,-Bstatic' 
-				linker.args '-lopus'
+				//linker.args '-lopus'
+                lib library:'opus', linkage: 'static'
 			}
 			
 		}
 	}
-=======
-model{
-    toolChains{
-        gcc(Gcc){
-            target 'ubun'
-        }
-    }
-    platforms{
-        ubun{
-            architecture 'x86_64'
-            operatingSystem 'linux'
-        }
-    
-    }
-    buildTypes{
-        debug
-        release
-    }
-    
-    components{
-        VoIPCodec(NativeExecutableSpec){
-            targetPlatform 'ubun'
-            sources {
-                cpp{
-                    //preCompiledHeader "rtp.h"
-                    source{
-                        srcDir "src"
-                        include "*.cpp"
-                    }
-                    exportedHeaders{
-                        srcDir "inc"
-			srcDir "scr"
-			srcDir "inc/opus"
-                    }
-                }
-            }
-            
-            binaries.all{
-                cCompiler.define 'DEBUG_O'
-                if(toolChain in Gcc && buildType == buildTypes.debug){
-                    cppCompiler.args '-ggdb','-Werror','-O2'
-                }
-            }
-            binaries.withType(SharedLibraryBinarySpec){
-               // printf "${sharedLibraryLinkFile}"
-               //shared
-                def outputFolder = sharedLibraryFile.parent
-		sharedLibraryFile = "${outputFolder}/libVoIPCodec.so"
-		sharedLibraryLinkFile = sharedLibraryFile
-            }
-        }
-    }
->>>>>>> b8f3f6939464f0875c533b561237cc61b00e73d0
 
 }
