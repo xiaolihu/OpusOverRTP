@@ -7,7 +7,7 @@
 
 #include <cstring>
 
-#define OPUS_DEFAULT_SAMPLE_RATE 48000 // To be done, should be passed in via CLI command
+#define OPUS_DEFAULT_SAMPLE_RATE 16000 // To be done, should be passed in via CLI command
 
 struct opusConig {
     int codecMode;
@@ -27,7 +27,7 @@ const int max_output_samples = OPUS_DEFAULT_SAMPLE_RATE * 0.001 * 120;
 
 class opusCodec: public voipCodec {
 public:
-    opusCodec();
+    opusCodec(opus_int32 sampRate = 16000);
     ~opusCodec() { opus_decoder_destroy(decInst); delete[] decOutputBuf; }
 
     int decodeFrame(istream &fin, ostream &fout);
@@ -41,12 +41,12 @@ private:
 };
 
 
-opusCodec::opusCodec()
+opusCodec::opusCodec(opus_int32 sampRate)
 {
     //should be passed-in via command line
     int error, ch = 1; 
-    decInst = opus_decoder_create(16000, ch, &error);
-
+    decInst = opus_decoder_create(sampRate, ch, &error);
+    
     encInst = NULL; // TBD
 
     decOutputBuf = new char[5760]();
