@@ -3,8 +3,12 @@
 // All Copyrights are reserved.
 #include "rtp.h"
 #include <iostream>
+#include <iomanip>
 #include <cstring>
 using namespace std;
+
+void print_hex(char *str,int len);
+
 class voipCodec {
 public:
     voipCodec() { RD_buffer = new RD_buffer_t(); }
