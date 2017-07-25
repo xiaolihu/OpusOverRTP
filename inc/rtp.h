@@ -35,8 +35,14 @@ typedef struct {
  * the RTP/RTCP header and (optionally) the actual payload.
  *
  */
+
+struct timev {
+  int32    tv_sec;/*second(s)*/
+  int32    tv_usec;/*microsecond(us)*/
+};
+
 typedef struct {
-  struct timeval start;  /* start of recording (GMT) */
+  struct timev start;  /* start of recording (GMT) */
   u_int32 source;        /* network source (multicast address) */
   u_int16 port;          /* UDP port */
 } RD_hdr_t;
