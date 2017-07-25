@@ -10,7 +10,7 @@ Check whether you have installed and configured Gradle correctly:
 
 To build from the git repository, the following steps are necessary:
 
-##0. Set up a development environment:
+**0. Set up a development environment:**
 
     On an Ubuntu or Debian family Linux distribution:
 
@@ -28,13 +28,13 @@ To build from the git repository, the following steps are necessary:
 
         % brew install autoconf automake libtool
 
-##1. Clone the repository:
+**1. Clone the repository:**
 
     % git clone https://github.com/xiaolinhu/OpusOverRTP.git
     
     % cd OpusOverRTP
 
-##2. Build the source:
+**2. Build the source:**
 
     % gradle build
 
