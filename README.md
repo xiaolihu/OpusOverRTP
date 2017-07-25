@@ -10,7 +10,7 @@ Check whether you have installed and configured Gradle correctly:
 
 To build from the git repository, the following steps are necessary:
 
-0) Set up a development environment:
+0. Set up a development environment:
 
     On an Ubuntu or Debian family Linux distribution:
 
@@ -28,30 +28,32 @@ To build from the git repository, the following steps are necessary:
 
         % brew install autoconf automake libtool
 
-1) Clone the repository:
+1. Clone the repository:
 
     % git clone https://github.com/xiaolinhu/OpusOverRTP.git
     % cd OpusOverRTP
 
-2) Build the source:
+2. Build the source:
 
     % gradle build
 
 Once you have build the source, there will be a VoIPCodec executable in ./build/exe/voIPCodec/debug and ./build/exe/voIPCodec/release directory.
 
 # Usage
+```
 Usage  : VoIPCodec [options] <input filename> <output filename>
 
 options:
         -d : runs the decoder
         -r <sampling rate(Hz)>: default value is 16000 Hz Supported sampling rates are 8000, 12000, 16000, 24000 and 48000
         -c <channel>: default value is 1. Supported channel are 1 and 2
+```
 
 # Reference
-rtp dump format description:  
+rtp dump format description:
 http://www.cs.columbia.edu/irt/software/rtptools/
 
-wireshar export rtp file: 
+wireshar export rtp file:
 https://wiki.wireshark.org/rtpdump
 
 
