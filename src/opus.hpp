@@ -4,7 +4,6 @@
 
 #include "VoIPCodec.hpp"
 #include "opus.h"
-
 #include <cstring>
 
 #define OPUS_DEFAULT_SAMPLE_RATE 16000 // To be done, should be passed in via CLI command
@@ -23,11 +22,11 @@ typedef enum {
 	DEC_SUCCESS = 0
 } CODEC_RC;
 
-extern void print_hex(char *str,int len);
+extern void print_hex(char *str, int len);
 
 class opusCodec: public voipCodec {
 public:
-    opusCodec(opus_int32 sampRate = 16000,int ch=1);
+    opusCodec(opus_int32 sampRate = 16000, int ch=1);
     ~opusCodec() { opus_decoder_destroy(decInst); delete[] decOutputBuf; }
 
     int decodeFrame(istream &fin, ostream &fout);

@@ -14,18 +14,30 @@ bool voipCodec::validateRTPDumpVersion(istream &fin)
     // rtp dump file version @ first line
     // first line format : !#rtpplay1.0 address/port\n
     char line[80], magic[80];
-    char temp[40];
 
     fin.getline(line, sizeof(line));
-    
-    //skip extra 16 bytes data
-    fin.read(temp,16);
     
     sprintf(magic, "#!rtpplay%s ", RTPFILE_VER);
 
     if(!strncmp(line, magic, strlen(magic))) return true;
 
     return false;
+}
+
+void voipCodec::getRTPHeader(istream &fin,RD_hdr_t* hd)
+{
+    // One binary header(RD_hdr_t) follows after rtp dump file version
+    // https://wiki.wireshark.org/rtpdump
+    char temp[20];
+
+    fin.read(temp, sizeof(RD_hdr_t));
+    memcpy(hd, temp, sizeof(RD_hdr_t));
+
+    /* convert to host byte order */
+    hd->start.tv_sec = ntohl(hd->start.tv_sec);
+    hd->start.tv_usec = ntohl(hd->start.tv_usec);
+    hd->source = ntohl(hd->source);
+    hd->port = ntohs(hd->port);
 }
 
 int voipCodec::extractRTPPayload(istream &fin, RD_buffer_t *b)
@@ -50,17 +62,19 @@ int voipCodec::extractRTPPayload(istream &fin, RD_buffer_t *b)
     return (b->p.hdr.plen - sizeof(b->p.rtp_hdr));
 }
 
-void print_hex(char *str,int len)
+void print_hex(char *str, int len)
 {
     char ch;
-    if(len>256) len = 256;
-    for(int i=0; i<len;i++){
-        ch = str[i];
-        cout<<setw(2)<<setfill('0')<<hex<<(static_cast<short>(ch) & 0xff)<<" "; 
 
-        if((i+1)%16 == 0) cout<<endl;
-        else if((i+1)%8 == 0) cout<<"  ";
+    for(int i = 0; i < len; i++) {
+        ch = str[i];
+        cout << setw(2) << setfill('0') << hex << (static_cast<short>(ch) & 0xff) << " "; 
+
+        if ( (i+1)%16 == 0 )
+            cout<< endl;
+        else if ( (i+1)%8 == 0 )
+            cout<< "  ";
                
     }
-    cout<<"end"<<endl<<endl;
+    cout<< endl;
 }
