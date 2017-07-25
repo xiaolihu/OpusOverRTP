@@ -5,6 +5,7 @@ Opus as VoIP Codec. To directly decode opus over RTP packets, creating this repo
 Gradle is used to build OpusOverRTP, so you have to install and configure Gradle before you build from the git repository.
 
 Check whether you have installed and configured Gradle correctly:
+
     % gradle -v
 
 To build from the git repository, the following steps are necessary:
@@ -13,19 +14,19 @@ To build from the git repository, the following steps are necessary:
 
     On an Ubuntu or Debian family Linux distribution:
 
-    % sudo apt-get install git autoconf automake libtool gcc make
+        % sudo apt-get install git autoconf automake libtool gcc make
 
-On a Fedora/Redhat based Linux:
+    On a Fedora/Redhat based Linux:
 
-    % sudo dnf install git autoconf automake libtool gcc make
+        % sudo dnf install git autoconf automake libtool gcc make
 
-Or for older Redhat/Centos Linux releases:
+    Or for older Redhat/Centos Linux releases:
 
-    % sudo yum install git autoconf automake libtool gcc make
+        % sudo yum install git autoconf automake libtool gcc make
 
-On Apple macOS, install Xcode and brew.sh, then in the Terminal enter:
+    On Apple macOS, install Xcode and brew.sh, then in the Terminal enter:
 
-    % brew install autoconf automake libtool
+        % brew install autoconf automake libtool
 
 1) Clone the repository:
 
