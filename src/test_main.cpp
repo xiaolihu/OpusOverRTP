@@ -45,7 +45,9 @@ int main(int argc, char *argv[])
         } else if (temp_str == "-r") {
             sampling_rate = (opus_int32)atol(argv[++args]);
             args++;
-            if (sampling_rate != 8000 && sampling_rate != 12000 && sampling_rate != 16000 && sampling_rate != 24000 && sampling_rate != 48000) {
+            if (sampling_rate != 8000 && sampling_rate != 12000
+                    && sampling_rate != 16000 && sampling_rate != 24000 
+                    && sampling_rate != 48000) {
                 cerr<< "Supported sampling rates are 8000, 12000, 16000, 24000 and 48000."<< endl;
                 cerr<< "Using default value 16000"<< endl;
                 sampling_rate = 16000;
