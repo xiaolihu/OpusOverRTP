@@ -17,13 +17,13 @@ public:
     void voipDecInit() {}
     void voipEncInit() {}
 
-    virtual int decodeFrame() {};
-    virtual int encodeFrame() {};
+    virtual int decodeFrame() {return 0;}
+    virtual int encodeFrame() {return 0;}
 protected:
     bool validateRTPDumpVersion(std::istream &fin);
     void getRTPHeader(istream &fin, RD_hdr_t *hd);
     int extractRTPPayload(std::istream &fin, RD_buffer_t *b);
-    RD_buffer_t * RD_buffer = NULL;
+    RD_buffer_t * RD_buffer;
 private:
     static const char RTPFILE_VER[];
     //TBD

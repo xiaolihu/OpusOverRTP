@@ -1,49 +1,78 @@
 apply plugin : 'cpp'
 apply plugin : 'c'
+apply plugin : 'visual-studio'
 
 
-model{
-	toolChains{
+model {
+	toolChains {
+        visualCpp(VisualCpp) {
+            
+        }
         
 		gcc(Gcc){
 			target 'ubun'
 		}
+        
         clang(Clang) {
-	    target "Macx64"
-	}
+		    target "Macx64"
+	    }
 	}
 	platforms{
-		ubun{
-			architecture 'x86_64'
-			operatingSystem 'linux'
-		}
+	    windows_x86 {
+            architecture "i386"
+            operatingSystem "windows"
+        }
+        windows_x64 {
+            architecture "x86_64"
+            operatingSystem "windows"
+        }
+        ubun{
+            architecture 'x86_64'
+            operatingSystem 'linux'
+        }
 	    Macx64 {
 	        architecture 'x86_64'
 	        operatingSystem 'darwin'
         }
-	}
+    }
+    
 	buildTypes{
 		debug
 		release
 	}
+    
 	repositories {
 		libs(PrebuiltLibraries){
-			opus{
-				headers.srcDir './lib/ubunos'
-				binaries.withType(StaticLibraryBinary){
-					staticLibraryFile = file('lib/ubunos/libopus.a.1.2.1')
-				}		 
-			}
-		}
+            opus{
+                binaries.withType(StaticLibraryBinary) {
+                    if(targetPlatform == platforms.windows_x86) {
+                        staticLibraryFile = file('lib/windows/x86/opus.lib')
+                    } else if (targetPlatform == platforms.windows_x64) {
+                        staticLibraryFile = file('lib/windows/x64/opus.lib')
+                    } else if (targetPlatform == platforms.ubun) {
+                        staticLibraryFile = file('lib/ubunos/libopus.a.1.2.1')
+                    } else if (targetPlatform == platforms.Macx64) {
+                            staticLibraryFile = file('lib/macos/libopus.a')
+                    }
+                }
+            }   
+        }  
 	}
+    
 	components{
 		VoIPCodec(NativeExecutableSpec){
-			targetPlatform 'ubun'
+            def os = org.gradle.internal.os.OperatingSystem.current()
+            if(os.isWindows()) {
+                targetPlatform "windows_x86"
+                targetPlatform "windows_x64"
+            } else if (os.isLinux()) {
+                targetPlatform "ubun"
+            } else if (os.isMacOsX()) {
+                targetPlatform "Macx64"
+            }
 
-			sources {
-				
+            sources {
 				cpp{
-					//preCompiledHeader "rtp.h"
 					source{
 						srcDir "src"
 						include "*.cpp"
@@ -59,18 +88,24 @@ model{
 			binaries.all{
 				cppCompiler.define 'DEBUG_O'
 			   
-				if(toolChain in Gcc && buildType == buildTypes.debug){
-					cppCompiler.args '-ggdb','-Werror','-g','-O0'
+				if (toolChain in Gcc && buildType == buildTypes.debug){
+                    cppCompiler.args '-ggdb','-Werror','-g','-O0'
+                    linker.args '-lstdc++'
 				}
-				//linker.args "-static"
-				//linker.args '-Wl,-Bdynamic'
-				linker.args '-lstdc++'
-				//linker.args '-Wl,-Bstatic' 
-				//linker.args '-lopus'
+                
+                if (toolChain in VisualCpp ) {
+                    cppCompiler.args "/EHsc", "/ZI","/Od","/MDd"
+                    
+                    if( buildType == buildTypes.debug ) {   
+                        linker.args "/DEBUG"
+                    }
+                    
+                    linker.args "/NODEFAULTLIB:LIBCMTD.lib"
+                }
+
                 lib library:'opus', linkage: 'static'
 			}
 			
 		}
 	}
-
 }

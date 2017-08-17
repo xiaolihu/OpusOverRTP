@@ -12,7 +12,7 @@ using namespace std;
 
 void print_usage(char *argv[])
 {
-    cerr<< "Usage: " << argv[0] << "-d [options] "<< "<input filename> <output filename>"<< endl;
+    cerr<< "Usage: " << argv[0] << " -d [options] "<< "<input filename> <output filename>"<< endl;
     cerr<< "options:"<< endl;
     cerr<< "        -d : runs the decoder"<< endl;
     cerr<< "        -r <sampling rate(Hz)>: default value is 16000 Hz. Supported sampling rates are 8000, 12000, 16000, 24000 and 48000."<< endl;
@@ -26,7 +26,6 @@ int main(int argc, char *argv[])
     string temp_str;
     opus_int32 sampling_rate = 16000;
     
-
     if (argc < 3) {
         print_usage(argv);
         return -1;

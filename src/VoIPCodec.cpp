@@ -5,10 +5,15 @@
 #include "VoIPCodec.hpp"
 #include <stdio.h>
 #include <stdlib.h>
-#include <netinet/in.h>
+
+#ifdef _WIN32
+    #include <Winsock2.h>
+	#pragma comment(lib, "ws2_32.lib")
+#else 
+    #include <netinet/in.h>
+#endif
 
 const char voipCodec::RTPFILE_VER[] = "1.0";
-
 bool voipCodec::validateRTPDumpVersion(istream &fin)
 {
     // rtp dump file version @ first line

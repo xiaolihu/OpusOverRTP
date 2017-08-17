@@ -27,18 +27,27 @@ To build from the git repository, the following steps are necessary:
     On Apple macOS, install Xcode and brew.sh, then in the Terminal enter:
 
         % brew install autoconf automake libtool
+        
+    On Windows, install Visual Studio and git for windows
 
-**1. Clone the repository:**
+##1. Clone the repository:
 
     % git clone https://github.com/xiaolinhu/OpusOverRTP.git
     
     % cd OpusOverRTP
 
-**2. Build the source:**
+##2. Build the source:
 
     % gradle build
 
 Once you have build the source, there will be a VoIPCodec executable in ./build/exe/voIPCodec/debug and ./build/exe/voIPCodec/release directory.
+
+However, besides this method, you have another method to build OpusOverRTP if on a Windows system:
+
+1. Open ./win32/OpusOverRTP/OpusOverRTP.vcxproj with Virsual Studio;
+2. Run the project.
+
+Once you have ran the project, you can get OpusOverRTP.exe in ./win32/Debug directory.
 
 # Usage
 ```
@@ -56,5 +65,3 @@ http://www.cs.columbia.edu/irt/software/rtptools/
 
 wireshar export rtp file:
 https://wiki.wireshark.org/rtpdump
-
-

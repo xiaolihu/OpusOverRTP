@@ -16,10 +16,12 @@ public:
 int g711uCodec::decodeFrame()
 {
 // TBD
+    return 0;
 }
 
 int g711uCodec::encodeFrame()
 {
 // TBD
+    return 0;
 }
 
