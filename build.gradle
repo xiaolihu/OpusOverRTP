@@ -52,7 +52,7 @@ model {
                     } else if (targetPlatform == platforms.ubun) {
                         staticLibraryFile = file('lib/ubunos/libopus.a.1.2.1')
                     } else if (targetPlatform == platforms.Macx64) {
-                            staticLibraryFile = file('lib/macos/libopus.a')
+                        staticLibraryFile = file('lib/macos/libopus.a')
                     }
                 }
             }   
