@@ -4,6 +4,8 @@ Opus as VoIP Codec. To directly decode opus over RTP packets, creating this repo
 # Build
 Gradle is used to build OpusOverRTP, so you have to install and configure Gradle before you build from the git repository.
 
+Gradle installation instructions : <https://gradle.org/install/>
+
 Check whether you have installed and configured Gradle correctly:
 
     % gradle -v
@@ -30,13 +32,13 @@ To build from the git repository, the following steps are necessary:
         
     On Windows, install Visual Studio and git for windows
 
-##1. Clone the repository:
+**1. Clone the repository:**
 
     % git clone https://github.com/xiaolinhu/OpusOverRTP.git
     
     % cd OpusOverRTP
 
-##2. Build the source:
+**2. Build the source:**
 
     % gradle build
 
@@ -44,8 +46,9 @@ Once you have build the source, there will be a VoIPCodec executable in ./build/
 
 However, besides this method, you have another method to build OpusOverRTP if on a Windows system:
 
-1. Open ./win32/OpusOverRTP/OpusOverRTP.vcxproj with Virsual Studio;
-2. Run the project.
+    1. Open ./win32/OpusOverRTP/OpusOverRTP.vcxproj with Virsual Studio;
+    
+    2. Run the project.
 
 Once you have ran the project, you can get OpusOverRTP.exe in ./win32/Debug directory.
 
