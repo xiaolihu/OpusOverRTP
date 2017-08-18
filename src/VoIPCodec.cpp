@@ -8,8 +8,8 @@
 
 #ifdef _WIN32
     #include <Winsock2.h>
-	#pragma comment(lib, "ws2_32.lib")
-#else 
+    #pragma comment(lib, "ws2_32.lib")
+#else
     #include <netinet/in.h>
 #endif
 

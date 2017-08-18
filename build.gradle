@@ -4,21 +4,21 @@ apply plugin : 'visual-studio'
 
 
 model {
-	toolChains {
+    toolChains {
         visualCpp(VisualCpp) {
-            
+
         }
         
-		gcc(Gcc){
-			target 'ubun'
-		}
+        gcc(Gcc){
+            target 'ubun'
+        }
         
         clang(Clang) {
-		    target "Macx64"
-	    }
-	}
-	platforms{
-	    windows_x86 {
+            target "Macx64"
+        }
+    }
+    platforms{
+        windows_x86 {
             architecture "i386"
             operatingSystem "windows"
         }
@@ -30,19 +30,19 @@ model {
             architecture 'x86_64'
             operatingSystem 'linux'
         }
-	    Macx64 {
-	        architecture 'x86_64'
-	        operatingSystem 'darwin'
+        Macx64 {
+            architecture 'x86_64'
+            operatingSystem 'darwin'
         }
     }
     
-	buildTypes{
-		debug
-		release
-	}
+    buildTypes{
+        debug
+        release
+    }
     
-	repositories {
-		libs(PrebuiltLibraries){
+    repositories {
+        libs(PrebuiltLibraries){
             opus{
                 binaries.withType(StaticLibraryBinary) {
                     if(targetPlatform == platforms.windows_x86) {
@@ -57,10 +57,10 @@ model {
                 }
             }   
         }  
-	}
+    }
     
-	components{
-		VoIPCodec(NativeExecutableSpec){
+    components{
+        VoIPCodec(NativeExecutableSpec){
             def os = org.gradle.internal.os.OperatingSystem.current()
             if(os.isWindows()) {
                 targetPlatform "windows_x86"
@@ -72,26 +72,26 @@ model {
             }
 
             sources {
-				cpp{
-					source{
-						srcDir "src"
-						include "*.cpp"
-					}
-					exportedHeaders{
-						srcDir "inc"
-			            srcDir "scr"
-			            srcDir "inc/opus"
-					}
-				}
-			}
-			
-			binaries.all{
-				cppCompiler.define 'DEBUG_O'
-			   
-				if (toolChain in Gcc && buildType == buildTypes.debug){
+                cpp {
+                    source {
+                        srcDir "src"
+                        include "*.cpp"
+                    }
+                    exportedHeaders {
+                        srcDir "inc"
+                        srcDir "scr"
+                        srcDir "inc/opus"
+                    }
+                }
+            }
+            
+            binaries.all{
+                cppCompiler.define 'DEBUG_O'
+               
+                if (toolChain in Gcc && buildType == buildTypes.debug){
                     cppCompiler.args '-ggdb','-Werror','-g','-O0'
                     linker.args '-lstdc++'
-				}
+                }
                 
                 if (toolChain in VisualCpp ) {
                     cppCompiler.args "/EHsc", "/ZI","/Od","/MDd"
@@ -104,8 +104,7 @@ model {
                 }
 
                 lib library:'opus', linkage: 'static'
-			}
-			
-		}
-	}
+            }
+        }
+    }
 }
