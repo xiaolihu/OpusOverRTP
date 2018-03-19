@@ -18,8 +18,8 @@ struct opusConig {
 };
 
 typedef enum {
-	DEC_FAILURE = -1,
-	DEC_SUCCESS = 0
+    DEC_FAILURE = -1,
+    DEC_SUCCESS = 0
 } CODEC_RC;
 
 extern void print_hex(char *str, int len);

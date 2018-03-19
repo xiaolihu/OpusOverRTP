@@ -9,6 +9,11 @@ using namespace std;
 
 void print_hex(char *str, int len);
 
+enum {
+    ENCDEC_OK,
+    ENCDEC_ERROR
+};
+
 class voipCodec {
 public:
     voipCodec() { RD_buffer = new RD_buffer_t(); }
@@ -17,8 +22,8 @@ public:
     void voipDecInit() {}
     void voipEncInit() {}
 
-    virtual int decodeFrame() {return 0;}
-    virtual int encodeFrame() {return 0;}
+    int decodeFrame() {return 0;}
+    int encodeFrame() {return 0;}
 protected:
     bool validateRTPDumpVersion(std::istream &fin);
     void getRTPHeader(istream &fin, RD_hdr_t *hd);

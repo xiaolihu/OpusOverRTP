@@ -29,7 +29,7 @@ void error_anylsis(int code)
     }
 }
 
-opusCodec::opusCodec(opus_int32 sampRate,int ch)
+opusCodec::opusCodec(opus_int32 sampRate, int ch)
 {
     //should be passed-in via command line
     int error; 
